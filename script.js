@@ -1,16 +1,24 @@
-let totalStudyTime = 0; // Variabel untuk menyimpan total waktu belajar
+let totalStudyTime = 0;
+let studySessions = 0; 
 let studyTimer;
 let isStudying = false;
+let remainingTime = 0;
+let studyTimes = []; 
 
-// Memulai timer Pomodoro
 function startPomodoro() {
   const studyTime = parseInt(document.getElementById("studyTime").value);
   const breakTime = parseInt(document.getElementById("breakTime").value);
 
-  let remainingTime = studyTime * 60; // Waktu belajar dalam detik
+  if (!remainingTime) {
+    remainingTime = studyTime * 60;
+  }
   isStudying = true;
 
-  // Menampilkan timer
+  localStorage.setItem("isStudying", isStudying);
+  localStorage.setItem("remainingTime", remainingTime);
+  localStorage.setItem("studyTime", studyTime);
+  localStorage.setItem("breakTime", breakTime);
+
   studyTimer = setInterval(function () {
     if (remainingTime > 0) {
       remainingTime--;
@@ -19,20 +27,32 @@ function startPomodoro() {
       document.getElementById("timerDisplay").innerText = `${formatTime(
         minutes
       )}:${formatTime(seconds)}`;
+
+      localStorage.setItem("remainingTime", remainingTime);
     } else {
       clearInterval(studyTimer);
-      totalStudyTime += studyTime; // Menambahkan waktu belajar ke total
-      document.getElementById("totalStudyTime").innerText = totalStudyTime; // Update statistik waktu belajar
+      totalStudyTime += studyTime;
+      studySessions++;
+      studyTimes.push(studyTime);
+      document.getElementById("totalStudyTime").innerText = totalStudyTime;
+      document.getElementById("averageStudyTime").innerText = (totalStudyTime / studySessions).toFixed(2);
+      updateChart();
       alert("Waktu belajar selesai! Saatnya istirahat.");
-      startBreak(); // Mulai sesi istirahat
+      remainingTime = 0;
+      startBreak();
     }
   }, 1000);
 }
 
-// Memulai timer untuk istirahat
 function startBreak() {
-  const breakTime = parseInt(document.getElementById("breakTime").value);
-  let remainingTime = breakTime * 60; // Waktu istirahat dalam detik
+  const breakTime = parseInt(localStorage.getItem("breakTime"));
+
+  if (!remainingTime) {
+    remainingTime = breakTime * 60;
+  }
+
+  localStorage.setItem("isStudying", false);
+  localStorage.setItem("remainingTime", remainingTime);
 
   studyTimer = setInterval(function () {
     if (remainingTime > 0) {
@@ -42,26 +62,42 @@ function startBreak() {
       document.getElementById("timerDisplay").innerText = `${formatTime(
         minutes
       )}:${formatTime(seconds)}`;
+
+      localStorage.setItem("remainingTime", remainingTime);
     } else {
       clearInterval(studyTimer);
       alert("Waktu istirahat selesai! Saatnya belajar lagi.");
-      startPomodoro(); // Mulai sesi belajar lagi
+      remainingTime = 0;
+      startPomodoro();
     }
   }, 1000);
 }
 
-// Menghentikan timer Pomodoro
 function stopPomodoro() {
   clearInterval(studyTimer);
-  document.getElementById("timerDisplay").innerText = "00:00";
+  isStudying = false;
+  localStorage.setItem("remainingTime", remainingTime);
+  localStorage.setItem("isStudying", isStudying);
 }
 
-// Format waktu (menambahkan 0 jika kurang dari 10)
+function resetPomodoro() {
+  clearInterval(studyTimer);
+  remainingTime = 0;
+  isStudying = false;
+  document.getElementById("timerDisplay").innerText = "00:00";
+  localStorage.removeItem("isStudying");
+  localStorage.removeItem("remainingTime");
+
+  document.getElementById("studyTime").value = 25;
+  document.getElementById("breakTime").value = 5;
+  localStorage.setItem("studyTime", 25);
+  localStorage.setItem("breakTime", 5);
+}
+
 function formatTime(time) {
   return time < 10 ? "0" + time : time;
 }
 
-// Menambahkan tugas
 function addTask() {
   const taskInput = document.getElementById("newTask");
   const taskText = taskInput.value.trim();
@@ -69,42 +105,38 @@ function addTask() {
   if (taskText) {
     const taskList = document.getElementById("taskList");
     const li = document.createElement("li");
-    li.classList.add("task-item"); // Menambahkan kelas untuk styling
+    li.classList.add("task-item");
 
     li.textContent = taskText;
 
-    // Membuat tombol selesai
     const doneButton = document.createElement("button");
     doneButton.textContent = "Selesai";
-    doneButton.classList.add("done-button"); // Tambahkan kelas untuk styling
+    doneButton.classList.add("done-button");
     doneButton.onclick = function () {
-      li.style.textDecoration = "line-through"; // Menandai tugas selesai
-      doneButton.disabled = true; // Menonaktifkan tombol selesai setelah digunakan
-      li.classList.add("completed"); // Menambahkan kelas untuk tugas yang selesai
-      saveTasks(); // Simpan tugas setelah diselesaikan
+      li.style.textDecoration = "line-through";
+      doneButton.disabled = true;
+      li.classList.add("completed");
+      saveTasks();
     };
 
-    // Membuat tombol hapus
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Hapus";
-    deleteButton.classList.add("delete-button"); // Tambahkan kelas untuk styling
+    deleteButton.classList.add("delete-button");
     deleteButton.onclick = function () {
-      taskList.removeChild(li); // Menghapus tugas dari daftar
-      saveTasks(); // Simpan setelah tugas dihapus
+      taskList.removeChild(li);
+      saveTasks();
     };
 
-    // Menambahkan tombol selesai dan hapus ke dalam <li>
     li.appendChild(doneButton);
     li.appendChild(deleteButton);
     taskList.appendChild(li);
 
-    taskInput.value = ""; // Kosongkan input setelah tugas ditambahkan
+    taskInput.value = "";
 
-    saveTasks(); // Simpan daftar tugas setelah ditambahkan
+    saveTasks();
   }
 }
 
-// Menyimpan daftar tugas ke localStorage
 function saveTasks() {
   const tasks = [];
   const taskListItems = document.querySelectorAll(".task-item");
@@ -115,10 +147,9 @@ function saveTasks() {
     tasks.push({ text: taskText, completed: isCompleted });
   });
 
-  localStorage.setItem("tasks", JSON.stringify(tasks)); // Simpan ke localStorage
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Memuat daftar tugas dari localStorage saat halaman dimuat
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem("tasks"));
   if (tasks) {
@@ -130,13 +161,11 @@ function loadTasks() {
 
       li.textContent = task.text;
 
-      // Menandai tugas selesai jika sudah diselesaikan
       if (task.completed) {
         li.style.textDecoration = "line-through";
         li.classList.add("completed");
       }
 
-      // Membuat tombol selesai
       const doneButton = document.createElement("button");
       doneButton.textContent = "Selesai";
       doneButton.classList.add("done-button");
@@ -144,16 +173,15 @@ function loadTasks() {
         li.style.textDecoration = "line-through";
         doneButton.disabled = true;
         li.classList.add("completed");
-        saveTasks(); // Simpan tugas setelah diselesaikan
+        saveTasks();
       };
 
-      // Membuat tombol hapus
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Hapus";
       deleteButton.classList.add("delete-button");
       deleteButton.onclick = function () {
-        taskList.removeChild(li); // Menghapus tugas dari daftar
-        saveTasks(); // Simpan setelah tugas dihapus
+        taskList.removeChild(li);
+        saveTasks();
       };
 
       li.appendChild(doneButton);
@@ -163,5 +191,69 @@ function loadTasks() {
   }
 }
 
-// Memuat tugas saat halaman dimuat
-window.onload = loadTasks;
+window.onload = function () {
+  loadTasks();
+
+  if (localStorage.getItem("remainingTime")) {
+    remainingTime = parseInt(localStorage.getItem("remainingTime"));
+    isStudying = localStorage.getItem("isStudying") === "true";
+
+    if (isStudying) {
+      document.getElementById("studyTime").value = localStorage.getItem("studyTime");
+      startPomodoro();
+    } else {
+      document.getElementById("breakTime").value = localStorage.getItem("breakTime");
+      startBreak();
+    }
+  } else {
+    if (localStorage.getItem("studyTime")) {
+      document.getElementById("studyTime").value = localStorage.getItem("studyTime");
+    }
+    if (localStorage.getItem("breakTime")) {
+      document.getElementById("breakTime").value = localStorage.getItem("breakTime");
+    }
+  }
+
+  document.getElementById("timerDisplay").classList.add("fade-in");
+
+  initChart();
+};
+
+function initChart() {
+  const ctx = document.getElementById('studyChart').getContext('2d');
+  window.studyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Waktu Belajar (menit)',
+        data: [],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function updateChart() {
+  const studyChart = window.studyChart;
+  studyChart.data.labels.push(`Sesi ${studySessions}`);
+  studyChart.data.datasets[0].data.push(studyTimes[studyTimes.length - 1]);
+  studyChart.update();
+}
+
+document.getElementById("breakTime").addEventListener("change", function() {
+  localStorage.setItem("breakTime", this.value);
+});
+
+document.getElementById("studyTime").addEventListener("change", function() {
+  localStorage.setItem("studyTime", this.value);
+});
