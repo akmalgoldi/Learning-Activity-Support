@@ -1,24 +1,28 @@
-/* General Styling */
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #494747; /* Soft light background */
+/* Reset beberapa default styling */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f7fa; /* Light background */
+  color: #333;
   line-height: 1.6;
-  color: #110f0f;
-  transition: background-color 0.3s ease; /* Halus saat ada perubahan background */
+  transition: background-color 0.3s ease;
 }
 
 .container {
   max-width: 900px;
   margin: 30px auto;
   padding: 20px;
-  background: #c9c8c8; /* Slightly darker for contrast */
+  background: #ffffff; /* White background */
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
-  opacity: 0; /* Mulai dengan transparan */
-  animation: fadeIn 1s forwards; /* Efek animasi muncul */
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
 /* Efek Fade In untuk kontainer */
@@ -34,15 +38,15 @@ body {
 /* Headings */
 h1 {
   text-align: center;
-  color: #2c3e50; /* Dark blue-gray color for elegance */
+  color: #2c3e50;
   margin-bottom: 25px;
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
-  opacity: 0; /* Mulai dengan transparan */
-  animation: fadeIn 1.5s forwards; /* Efek animasi muncul */
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
   animation-delay: 0.3s;
 }
 
@@ -53,8 +57,8 @@ h2 {
   border-left: 4px solid #3493ec;
   padding-left: 10px;
   font-size: 1.8rem;
-  opacity: 0; /* Mulai dengan transparan */
-  animation: fadeIn 1.5s forwards; /* Efek animasi muncul */
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
   animation-delay: 0.6s;
 }
 
@@ -67,7 +71,8 @@ label {
 }
 
 input[type="number"],
-input[type="text"] {
+input[type="text"],
+textarea {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
@@ -79,14 +84,15 @@ input[type="text"] {
 }
 
 input[type="number"]:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea:focus {
   border-color: #3493ec;
   box-shadow: 0 0 5px rgba(52, 147, 236, 0.5);
 }
 
 /* Buttons */
 button {
-  background-color: #4a90e2;
+  background-color: #3493ec;
   color: white;
   border: none;
   padding: 13px 20px;
@@ -96,13 +102,13 @@ button {
   transition: background-color 0.3s ease, transform 0.2s;
   width: 100%;
   margin-top: 10px;
-  opacity: 0; /* Mulai dengan transparan */
-  animation: fadeIn 1.5s forwards; /* Efek animasi muncul */
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
   animation-delay: 1s;
 }
 
 button:hover {
-  background-color: #357ab8;
+  background-color: #2672c3;
 }
 
 button.delete {
@@ -117,10 +123,10 @@ button.delete:hover {
 .todo-list {
   margin-top: 20px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   opacity: 0;
   animation: fadeIn 1s forwards;
   animation-delay: 0.2s;
@@ -137,8 +143,8 @@ ul {
   list-style: none;
   padding: 0;
   margin-top: 15px;
-  opacity: 0; /* Mulai dengan transparan */
-  animation: fadeIn 1.5s forwards; /* Efek animasi muncul */
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
   animation-delay: 1.3s;
 }
 
@@ -148,7 +154,7 @@ li {
   align-items: center;
   padding: 10px 15px;
   margin: 8px 0;
-  background: #fff;
+  background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -210,10 +216,10 @@ button.delete:hover {
 /* Spotify Embed Styling */
 .spotify {
   margin-top: 20px;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 iframe {
@@ -222,16 +228,84 @@ iframe {
   width: 100%;
   height: 152px;
 }
+
 #timerDisplay {
-  font-size: 5rem; /* Memperbesar ukuran font */
+  font-size: 5rem;
   text-align: center;
   margin-top: 20px;
   font-weight: bold;
-  color: #858a87;
+  color: #3493ec;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
   width: 100%;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 0.5s;  
+}
+
+/* Chart Styling */
+.chart-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Notes Styling */
+.notes {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notes textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.notes button {
+  margin-top: 10px;
+  background-color: #3493ec;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.notes button:hover {
+  background-color: #2672c3;
+}
+
+/* Calendar Styling */
+.calendar {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#calendar {
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
