@@ -7,22 +7,29 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f5f7fa; /* Light background */
+  background-color: #fdfdfd; /* Light background */
   color: #333;
   line-height: 1.6;
   transition: background-color 0.3s ease;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 30px auto;
   padding: 20px;
-  background: #ffffff; /* White background */
+  background: #d0cfcf; /* White background */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
   opacity: 0;
   animation: fadeIn 1s forwards;
+}
+
+/* Media Queries untuk layar besar */
+@media (min-width: 1200px) {
+  .container {
+      max-width: 80%; /* Sesuaikan lebar untuk layar besar */
+  }
 }
 
 /* Efek Fade In untuk kontainer */
