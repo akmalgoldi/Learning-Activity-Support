@@ -1,4 +1,4 @@
-# Learning Activity Support
+# Pomodoro Timer
 
 Ini adalah aplikasi web yang dirancang untuk membantu kita untuk mengelola sesi belajar menggunakan teknik Pomodoro. Aplikasi ini mencakup timer, daftar tugas, statistik belajar dan juga spotify playlist yang membuat kegiatan belajar lebih nyaman.
 
