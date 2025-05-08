@@ -1,37 +1,35 @@
-# Pomodoro Timer
+# ⏰ Learning Activity Support
 
-Ini adalah aplikasi web yang dirancang untuk membantu kita untuk mengelola sesi belajar menggunakan teknik Pomodoro. Aplikasi ini mencakup timer, daftar tugas, statistik belajar dan juga spotify playlist yang membuat kegiatan belajar lebih nyaman.
+_Aplikasi web interaktif untuk membantu manajemen waktu belajar dengan metode Pomodoro, dilengkapi daftar tugas, statistik, dan playlist Spotify._
 
-## Fitur
+---
 
-- **Timer Pomodoro**: Mulai, jeda, dan atur ulang sesi belajar.
-- **Daftar Tugas**: Tambahkan, selesaikan, dan hapus tugas.
-- **Statistik Belajar**: Lacak total dan rata-rata waktu belajar.
-- **Grafik**: Visualisasi sesi belajar .
-- **Playlist Spotify**: Dengarkan playlist.
+## 🎯 Fitur Utama
 
-## Memulai
+- ⏱️ **Timer Pomodoro** – Mulai, jeda, atur ulang sesi belajar
+- 📝 **Daftar Tugas** – Tambah, centang, dan hapus tugas
+- 📊 **Statistik Belajar** – Lacak durasi dan rata-rata waktu belajar
+- 📈 **Grafik Visualisasi** – Tampilkan data sesi belajar dengan grafik
+- 🎵 **Playlist Spotify** – Dengarkan musik untuk meningkatkan fokus
 
-### Prasyarat
+---
 
-- Browser web modern (Chrome, Firefox, Safari, Edge)
+## 🛠️ Teknologi yang Digunakan
 
-### Instalasi
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=chartdotjs&logoColor=white)
 
-1. Clone repositori:
-    ```bash
-    git clone https://github.com/akmalgoldi/Learning-Activity-Support.git
-    ```
-2. Masuk ke direktori proyek:
-    ```bash
-    cd aktivitas-belajar
-    ```
+---
 
-### Penggunaan
+## ⚙️ Instalasi & Penggunaan
 
-1. Buka [index.html](http://_vscodecontentref_/0) di browser web Anda.
-2. Atur waktu belajar dan istirahat Anda.
-3. Klik "Mulai" untuk memulai timer Pomodoro.
-4. Gunakan tombol "Pause" untuk menjeda timer dan "Reset" untuk mengatur ulang.
-5. Tambahkan tugas ke daftar tugas Anda dan tandai sebagai selesai atau hapus.
-6. Lihat statistik belajar dan grafik Anda.
+### 📦 Prasyarat
+- Browser web modern (Chrome, Firefox, Edge, Safari)
+
+### 🔧 Instalasi
+
+```bash
+git clone https://github.com/akmalgoldi/Learning-Activity-Support.git
+cd Learning-Activity-Support
